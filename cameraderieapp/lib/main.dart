@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,8 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cameraderie Photo App',
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 33, 18, 206)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 33, 18, 206)),
         useMaterial3: true,
       ),
       home: const CameraderieApp(title: 'Cameraderie App Home Page'),
@@ -21,25 +23,48 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CameraderieApp extends StatelessWidget {
+class CameraderieApp extends StatefulWidget {
   final String title;
   const CameraderieApp({super.key, required this.title});
+
+  @override
+  State<CameraderieApp> createState() => _CameraderieAppState();
+}
+
+class _CameraderieAppState extends State<CameraderieApp> {
+  File? _imageFile;
+
+  Future<void> _getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('No Image Selected!'),
-            SizedBox(height: 20),
+            _imageFile == null
+                ? const Text('No Image Selected!')
+                : Image.file(
+                    _imageFile!,
+                    height: 300,
+                  ),
+            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: null,
-              child: Text('Click a Photo'),
+              onPressed: _getImage,
+              child: const Text('Click a Photo'),
             ),
           ],
         ),
