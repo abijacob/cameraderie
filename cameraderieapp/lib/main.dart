@@ -14,9 +14,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cameraderie Photo App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 33, 18, 206)),
-        useMaterial3: true,
+        primarySwatch: Colors.orange,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.orange,
+        ),
       ),
       home: const CameraderieApp(title: 'Cameraderie App Home Page'),
     );
@@ -56,7 +62,14 @@ class _CameraderieAppState extends State<CameraderieApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _imageFile == null
-                ? const Text('No Image Selected!')
+                ? const Text(
+                    'No Image Selected!',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(158, 158, 158, 1.0),
+                    ),
+                  )
                 : Image.file(
                     _imageFile!,
                     height: 300,
