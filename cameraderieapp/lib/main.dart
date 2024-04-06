@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
+            minimumSize: MaterialStateProperty.all<Size>(const Size(250, 48)),
           ),
         ),
         appBarTheme: const AppBarTheme(
@@ -57,29 +58,46 @@ class _CameraderieAppState extends State<CameraderieApp> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _imageFile == null
-                ? const Text(
-                    'No Image Selected!',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(158, 158, 158, 1.0),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/whitetexturebg.jpeg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _imageFile == null
+                  ? const Text(
+                      'No Image Selected!',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    )
+                  : Image.file(
+                      _imageFile!,
+                      height: 300,
                     ),
-                  )
-                : Image.file(
-                    _imageFile!,
-                    height: 300,
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _getImage,
+                style: ButtonStyle(
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                ),
+                child: const Text(
+                  'Click a Photo',
+                  style: TextStyle(
+                    fontSize: 18,
                   ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _getImage,
-              child: const Text('Click a Photo'),
-            ),
-          ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
