@@ -14,15 +14,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cameraderie Photo App',
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primaryColor: Colors.grey[200],
+        hintColor: Colors.grey[600],
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
+            backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 105, 105, 105)),
             minimumSize: MaterialStateProperty.all<Size>(const Size(250, 48)),
           ),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.orange,
+          backgroundColor: Color.fromARGB(255, 105, 105, 105),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+          ),
+          centerTitle: true,
         ),
       ),
       home: const CameraderieApp(title: 'Cameraderie App Home Page'),
@@ -87,7 +93,7 @@ class _CameraderieAppState extends State<CameraderieApp> {
                 onPressed: _getImage,
                 style: ButtonStyle(
                   foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 child: const Text(
                   'Click a Photo',
